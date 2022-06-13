@@ -1,7 +1,11 @@
 #table_container{
-    width: 100%;
+    width: 90%;
     margin: auto;
     padding: 10px 0;
+}
+
+header.header{
+    z-index: 10;
 }
 
 

@@ -18,11 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/back_layout.css">
     <!--    後台書籍管理添加樣式  -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/book/css/back_book_add.css">
-    <style>
-        header.header{
-            z-index: 10;
-        }
-    </style>
+
     <title>管理後臺</title>
 </head>
 <body>
@@ -77,7 +73,7 @@
             </div>
             <div class="form-group col-6">
                 <label class="control-label" for="pubDate">出版日期</label>
-                <input class="form-control" id="pubDate" name="date" placeholder="MM/DD/YYY" type="date"/>
+                <input class="form-control" id="pubDate" name="date" placeholder="YYYY/MM/DD" type="date" max="9999-12-31"/>
             </div>
 
             <div class="form-group col-12">
@@ -89,7 +85,7 @@
                 <label for="table_content">章節目錄</label>
                 <textarea class="form-control" id="table_content" rows="8"></textarea>
             </div>
-            <button class="btn btn-primary ml-auto" type="submit" id="submit_btn" disabled>Submit form</button>
+            <button class="btn btn-primary ml-auto mr-1" type="button" id="submit_btn" disabled>Submit form</button>
         </form>
     </div>
 
