@@ -11,14 +11,11 @@ import java.sql.Timestamp;
 public class BidProd {
     private Integer bidID;
     private Integer bookID;
-    // 賣家會員編號
-    private Integer mbrID;
     private Integer startPrice = 0;
     private Integer bidDirectPrice = 0;
     private Integer bidCurPrice = 0;
-    // 0: 審核中, 1: 待上架, 2: 審核未通過, 3: 標案進行中, 4: 結標售出, 5:流標
+    // 0: 安排競標, 1: 待上架, 2: 標案進行中, 3: 結帳售出, 4: 流標
     private Integer bidProdStat = 0;
-    private String condition;
     private Timestamp bidStart;
     private Timestamp bidEnd;
 
@@ -36,14 +33,6 @@ public class BidProd {
 
     public void setBookID(Integer bookID) {
         this.bookID = bookID;
-    }
-
-    public Integer getMbrID() {
-        return mbrID;
-    }
-
-    public void setMbrID(Integer mbrID) {
-        this.mbrID = mbrID;
     }
 
     public Integer getStartPrice() {
@@ -78,14 +67,6 @@ public class BidProd {
         this.bidProdStat = bidProdStat;
     }
 
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
     public Timestamp getBidStart() {
         return bidStart;
     }
@@ -107,12 +88,10 @@ public class BidProd {
         return "BidProd{" +
                 "bidID=" + bidID +
                 ", bookID=" + bookID +
-                ", mbrID=" + mbrID +
                 ", startPrice=" + startPrice +
                 ", bidDirectPrice=" + bidDirectPrice +
                 ", bidCurPrice=" + bidCurPrice +
                 ", bidProdStat=" + bidProdStat +
-                ", condition='" + condition + '\'' +
                 ", bidStart=" + bidStart +
                 ", bidEnd=" + bidEnd +
                 '}';
