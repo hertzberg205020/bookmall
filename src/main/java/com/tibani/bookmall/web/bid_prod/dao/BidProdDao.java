@@ -12,7 +12,7 @@ import java.util.List;
  * @Date 2022-06-06 上午 08:55
  */
 public interface BidProdDao extends CoreDao<BidProd, Integer> {
-    List<BidProd> selectByMbr(Integer mbrID, Integer page);
     List<BidProd> selectByBidProdStat(Integer bidProdStat, Integer page);
+    List<BidProd> selectByBidProdName(String bookName, Integer page);
     List<BidProd> selectAll(Integer page);
 }
