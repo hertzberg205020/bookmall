@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: u8360
-  Date: 2022/6/11
-  Time: 下午 07:50
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
  <aside class="aside">
         <img class="img" src="${pageContext.request.contextPath}/images/Book2.png" height="130" width="130"></img>
@@ -57,7 +50,7 @@
                     </label>
                     <input type="checkbox" id="btn-7">
                     <ul>
-                        <li><a id="a" href ="../bid/bidprod_back_page.jsp">競標商品管理</a></li>
+                        <li><a id="a" ref ="#">競標商品管理</a></li>
                         <li><a id="a" ref ="#">競標訂單管理</a></li>
                     </ul>
                 </li>

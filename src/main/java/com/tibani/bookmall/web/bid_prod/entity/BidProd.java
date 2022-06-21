@@ -2,19 +2,22 @@ package com.tibani.bookmall.web.bid_prod.entity;
 
 import java.sql.Timestamp;
 
+import com.tibani.bookmall.web.book.dao.BookService;
+import com.tibani.bookmall.web.book.entity.Book;
+
 /**
  * @Description
  * @Author Robert
  * @Version
  * @Date 2022-06-05 下午 10:14
  */
-public class BidProd {
+public class BidProd implements java.io.Serializable {
     private Integer bidID;
     private Integer bookID;
     private Integer startPrice = 0;
     private Integer bidDirectPrice = 0;
     private Integer bidCurPrice = 0;
-    // 0: 安排競標, 1: 待上架, 2: 標案進行中, 3: 結帳售出, 4: 流標
+    // 0: 安排競標, 1: 待上架, 2: 標案進行中, 3: 結帳售出, 4: 流標, 5: 撤銷
     private Integer bidProdStat = 0;
     private Timestamp bidStart;
     private Timestamp bidEnd;
@@ -66,7 +69,7 @@ public class BidProd {
     public void setBidProdStat(Integer bidProdStat) {
         this.bidProdStat = bidProdStat;
     }
-
+    
     public Timestamp getBidStart() {
         return bidStart;
     }
@@ -95,5 +98,12 @@ public class BidProd {
                 ", bidStart=" + bidStart +
                 ", bidEnd=" + bidEnd +
                 '}';
+    }
+    
+    public Book getBook() {
+    	BookService sc = new BookService();
+    	Book book = sc.showOne(bookID);
+    	
+    	return book;
     }
 }

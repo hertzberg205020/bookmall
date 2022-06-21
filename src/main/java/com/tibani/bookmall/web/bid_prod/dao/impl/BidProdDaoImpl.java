@@ -96,7 +96,7 @@ public class BidProdDaoImpl implements BidProdDao {
 
     @Override
     public BidProd selectByPrimaryKey(Integer id) {
-        BidProd bidProd = new BidProd();
+        BidProd bidProd = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -113,8 +113,22 @@ public class BidProdDaoImpl implements BidProdDao {
 
             rs = pstmt.executeQuery();
 
-            List<BidProd> list = retrieve(rs);
-            bidProd = list.get(0);
+//            List<BidProd> list = retrieve(rs);
+//            bidProd = list.get(0);
+            
+            while (rs.next()) {
+            	bidProd = new BidProd();
+            	bidProd.setBidID(rs.getInt("bid_id"));
+                bidProd.setBookID(rs.getInt("book_id"));
+                bidProd.setStartPrice(rs.getInt("start_price"));
+                bidProd.setBidDirectPrice(rs.getInt("bid_direct_price"));
+                bidProd.setBidCurPrice(rs.getInt("bid_cur_price"));
+                bidProd.setBidProdStat(rs.getInt("bid_prod_stat"));
+                bidProd.setBidStart(rs.getTimestamp("bid_start"));
+                bidProd.setBidEnd(rs.getTimestamp("bid_end"));
+                
+            }
+            
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,8 +145,28 @@ public class BidProdDaoImpl implements BidProdDao {
      */
     @Override
     public List<BidProd> selectAll() {
-        return null;
-    }
+        List<BidProd> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        final String sql =
+                "select bid_id, book_id, start_price, bid_direct_price,\n" +
+                "       bid_cur_price, bid_prod_stat, bid_start, bid_end\n" +
+                "from bid_prod\n";
+        try {
+            conn = JDBCUtil.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            list = retrieve(rs); 
+            }
+        catch (SQLException e){
+        	 e.printStackTrace();
+        } finally {
+            JDBCUtil.close(conn, ps, rs);
+        }
+        return list;
+        }
+    
 
     /**
      * 查詢全部競標商品，每頁12筆資料
@@ -154,8 +188,9 @@ public class BidProdDaoImpl implements BidProdDao {
         try {
             conn = JDBCUtil.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, pageSize * (page - 1));
-            ps.setInt(2, pageSize);
+              ps.setInt(1, pageSize * (page - 1));
+//            ps.setInt(1, page * (pageSize - 1)); // 原本的寫法
+            ps.setInt(2, pageSize + 1) ; // 取13筆
             rs = ps.executeQuery();
             list = retrieve(rs);
         } catch (SQLException e) {
@@ -237,7 +272,32 @@ public class BidProdDaoImpl implements BidProdDao {
         }
         return list;
     }
-    /**
+    @Override
+	public List<BidProd> selectByBidProdStat(Integer bidProdStat) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<BidProd> list = null;
+        final String sql =
+                "select bid_id, book_id, start_price, bid_direct_price,\n" +
+                "       bid_cur_price, bid_prod_stat, bid_start, bid_end\n" +
+                "from bid_prod\n" +
+                "where bid_prod_stat = ?\n";
+        try {
+            conn = JDBCUtil.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, bidProdStat);
+            rs = pstmt.executeQuery();
+            list = retrieve(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(conn, pstmt, rs);
+        }
+        return list;
+	}
+
+	/**
      * 依競標商品名稱查詢競標商品，每頁12筆資料
      * @param bookName
      * @param page
@@ -281,22 +341,26 @@ public class BidProdDaoImpl implements BidProdDao {
         BidProdDao bidProdDao = new BidProdDaoImpl();
         
         /* Find by Primary Key*/
-//          BidProd bidProd = bidProdDao.selectByPrimaryKey(2);
+//          BidProd bidProd = bidProdDao.selectByPrimaryKey(36);
 //          System.out.println(bidProd);
 
         /* List All (limit 12 row per page) */
-//        List<BidProd> list = bidProdDao.selectAll(1);
+//        List<BidProd> list = bidProdDao.selectAll();
 //        for (BidProd aBidProd: list) {
-//        	System.out.println(aBidProd);
-//        }
+//        	System.out.println(aBidProd);}
+//
 //        System.out.println(list);
-
+//
         /* (X) Find by Member */
 //        List<BidProd> list = bidProdDao.selectByMbr(1, 1);
 //        System.out.println(list);
 
         /* Find by Product State */
 //        List<BidProd> list = bidProdDao.selectByBidProdStat(0, 2);
+//	      for (BidProd aBidProd: list) {
+//	    	System.out.println(aBidProd);
+//	    }
+//        List<BidProd> list = bidProdDao.selectByBidProdStat(1);
 //	      for (BidProd aBidProd: list) {
 //	    	System.out.println(aBidProd);
 //	    }
